@@ -17,10 +17,11 @@ const Popular = () => {
   };
 
   return (
+    //*for each recipe that is returned from api, output title - map function loops through each recipe
     <div>
       {popular.map((recipe) => {
         return (
-          <div>
+          <div key = {recipe.id}>
             <p>{recipe.title}</p>
           </div>
         );
