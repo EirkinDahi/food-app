@@ -11,12 +11,21 @@ const Popular = () => {
   }, []);
 
   const getPopularRecipes = async () => {
-    const api = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_FOOD_KEY}&number=9`
-    );
-    const data = await api.json();
-    // console.log(data);
-    setPopular(data.recipes); //pulling returned object from API
+    const check = localStorage.getItem("popular");
+
+    if (check) {
+      setPopular(JSON.parse(check));
+    } else {
+      const api = await fetch(
+        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_FOOD_KEY}&number=9`
+      );
+      const data = await api.json();
+
+      //can only save strings in local storage
+      localStorage.setItem("popular", JSON.stringify(data.recipes));
+      // console.log(data);
+      setPopular(data.recipes); //pulling returned object from API
+    }
   };
 
   return (
@@ -27,11 +36,11 @@ const Popular = () => {
         <Splide options={{ perPage: 4, drag: "free", gap: "5rem" }}>
           {popular.map((recipe) => {
             return (
-              <SplideSlide key = {recipe.id}>
+              <SplideSlide key={recipe.id}>
                 <Card>
                   <p>{recipe.title}</p>
                   <img src={recipe.image} alt={recipe.title} />
-                  <Gradient/>
+                  <Gradient />
                 </Card>
               </SplideSlide>
             );
@@ -47,7 +56,7 @@ const Wrapper = styled.div`
 `;
 
 const Card = styled.div`
-  min-height: 25rem;
+  min-height: 17rem;
   border-radius: 2rem;
   overflow: hidden;
   position: relative;
@@ -83,7 +92,7 @@ const Gradient = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5));
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
 `;
 
 export default Popular;
