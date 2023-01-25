@@ -1,17 +1,15 @@
 import React from "react";
 import Home from "./Home";
 import Cuisine from "./Cuisine";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 
 const Pages = () => {
   return (
     //if the path is equal to / then display home and such
-    <BrowserRouter>
-      <Routes>
-        <Route path = "/" element={<Home/>}/>
-        <Route path = "/cuisine" element={<Cuisine/>}/>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path = "/" element={<Home/>}/>
+      <Route path = "/cuisine/:food_type" element={<Cuisine/>}/>
+    </Routes>
 
   );
 };
